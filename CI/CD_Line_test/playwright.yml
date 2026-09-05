@@ -31,4 +31,4 @@ jobs:
 
     # 5. pytest를 이용해 UI 테스트 실행 (Headless 모드)
     - name: Run Pytest UI Tests
-      run: pytest test.py -v
+      run: pytest CI/CD_Line_test/test.py -v

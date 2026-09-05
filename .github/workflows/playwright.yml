@@ -32,3 +32,9 @@ jobs:
     # 5. pytest를 이용해 UI 테스트 실행 (Headless 모드)
     - name: Run Pytest UI Tests
       run: pytest CI/CD_Line_test/test.py -v
+
+    # 테스트가 성공(success)했을 때만 작동하는 배포 연동 단계
+    - name: Trigger Render Deployment
+      if: success()
+      run: |
+        curl -X POST "https://git-remote-repo.onrender.com"

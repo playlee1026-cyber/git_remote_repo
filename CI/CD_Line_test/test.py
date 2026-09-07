@@ -55,7 +55,7 @@ import pytest
 from playwright.sync_api import Page, expect
 
 # 테스트 대상 서버 URL (Render 등에 배포된 가상 서버 주소)
-BASE_URL = "https://my-security-mock.onrender.com"
+BASE_URL = "https://git-remote-repo.onrender.com"
 
 def test_unauthorized_access_to_admin_page(page: Page):
     """

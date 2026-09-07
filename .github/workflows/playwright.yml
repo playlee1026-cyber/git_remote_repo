@@ -41,3 +41,18 @@ jobs:
       if: success()
       run: |
         curl -X POST "https://git-remote-repo.onrender.com"
+
+
+        - name: Run Playwright tests
+        # 1. 스크린샷 옵션 추가
+        run: pytest CI/CD_Line_test/test.py -v --screenshot=only-on-failure
+
+      - name: Upload test results
+        # 2. 테스트가 실패해도 항상 실행되도록 설정
+        if: always() 
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results
+          # playwright-pytest 기본 스크린샷 저장 경로
+          path: test-results/ 
+          retention-days: 7

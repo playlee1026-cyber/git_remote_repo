@@ -37,16 +37,15 @@ def dashboard():
     return '<h1>보안 대시보드</h1><p>환영합니다.</p>'
 
 # 3. 관리자 전용 페이지 (RBAC 방어 로직 핵심)
+# app.py 의 admin_settings 함수 내부 수정 예시
 @app.route('/admin/settings')
 def admin_settings():
-    # 로그인을 안 한 경우
     if 'role' not in session:
-        return redirect(url_for('login'))
-    
-    # 로그인은 했지만 관리자(admin)가 아닌 경우 -> 방어 로직 작동
+        
+        return redirect(url_for('login'))     
     if session['role'] != 'admin':
-        # 403 Forbidden 에러와 함께 경고 텍스트 반환
-        return '<h1>접근 거부</h1><p>관리자 권한이 없습니다.</p>', 403
+        # 403 반환 대신 대시보드로 리다이렉트 시키고 싶을 때
+        return redirect(url_for('dashboard'))
         
     return '<h1>시스템 설정</h1><button>시스템 설정 저장</button>'
 

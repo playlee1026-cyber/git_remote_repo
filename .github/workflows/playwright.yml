@@ -29,6 +29,9 @@ jobs:
     - name: Install Playwright Browsers
       run: playwright install --with-deps
 
+    - name: Wake up Render server
+      run: curl -s https://git-remote-repo.onrender.com/login > /dev/null
+
     # 5. pytest를 이용해 UI 테스트 실행 (Headless 모드)
     - name: Run Pytest UI Tests
       run: pytest CI/CD_Line_test/test.py -v

@@ -28,31 +28,23 @@ jobs:
     # 4. Playwright 브라우저 엔진 및 리눅스 시스템 의존성 설치
     - name: Install Playwright Browsers
       run: playwright install --with-deps
-
     - name: Wake up Render server
       run: curl -s https://git-remote-repo.onrender.com/login > /dev/null
 
-    # 5. pytest를 이용해 UI 테스트 실행 (Headless 모드)
-    - name: Run Pytest UI Tests
-      run: pytest CI/CD_Line_test/test.py -v
+      # 기존 pytest 단계 대신 스크린샷 옵션이 추가된 단계로 교체
+    - name: Run Playwright tests
+      run: pytest CI/CD_Line_test/test.py -v --screenshot=only-on-failure
 
-    # 테스트가 성공(success)했을 때만 작동하는 배포 연동 단계
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: playwright-test-results
+        path: test-results/
+        retention-days: 7
+
+      # 테스트가 성공했을 때만 작동하는 배포 연동 단계
     - name: Trigger Render Deployment
       if: success()
       run: |
         curl -X POST "https://git-remote-repo.onrender.com"
-
-
-        - name: Run Playwright tests
-        # 1. 스크린샷 옵션 추가
-        run: pytest CI/CD_Line_test/test.py -v --screenshot=only-on-failure
-
-      - name: Upload test results
-        # 2. 테스트가 실패해도 항상 실행되도록 설정
-        if: always() 
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-test-results
-          # playwright-pytest 기본 스크린샷 저장 경로
-          path: test-results/ 
-          retention-days: 7

@@ -1,0 +1,5 @@
+﻿Test_Case_ID,Description,Endpoint,Method,Request_Payload,Expected_Status_Code,Expected_Response_Data
+TC_SIGNUP_001,정상 회원가입 (유효값),/api/v1/signup,POST,"{""email"": ""testuser@example.com"", ""password"": ""ValidPassword123!"", ""name"": ""QA_Engineer""}",201,"{""message"": ""User created successfully""}"
+TC_SIGNUP_002,이메일 형식 오류 (동등 분할),/api/v1/signup,POST,"{""email"": ""invalid-email-format"", ""password"": ""ValidPassword123!"", ""name"": ""QA_Engineer""}",400,"{""error"": ""Invalid email format""}"
+TC_SIGNUP_003,비밀번호 최소 길이 미달 (경계값 7자),/api/v1/signup,POST,"{""email"": ""testuser2@example.com"", ""password"": ""short1!"", ""name"": ""QA_Engineer""}",400,"{""error"": ""Password must be at least 8 characters""}"
+TC_SIGNUP_004,중복 이메일 가입 시도 (DB 제약 조건 검증),/api/v1/signup,POST,"{""email"": ""existing@example.com"", ""password"": ""ValidPassword123!"", ""name"": ""QA_Engineer""}",409,"{""error"": ""Email already exists""}"

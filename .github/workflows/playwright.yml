@@ -9,41 +9,39 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    # 1. GitHub 레포지토리의 소스 코드를 클라우드 러너로 체크아웃
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    # 2. Python 환경 세팅 (버전 지정)
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
 
-    # 3. 필수 라이브러리(pytest, playwright) 설치
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pytest pytest-playwright
+        pip install pytest pytest-playwright pytest-html
 
-    # 4. Playwright 브라우저 엔진 및 리눅스 시스템 의존성 설치
     - name: Install Playwright Browsers
       run: playwright install --with-deps
+
     - name: Wake up Render server
       run: curl -s https://git-remote-repo.onrender.com/login > /dev/null
 
-      # 기존 pytest 단계 대신 스크린샷 옵션이 추가된 단계로 교체
     - name: Run Playwright tests
-      run: pytest CI/CD_Line_test/test.py -v --screenshot=only-on-failure
+      # 시각적 리포트 생성(--html) 및 에러 발생 시 네트워크/DOM 트레이스 저장(--tracing) 옵션 추가
+      run: pytest CI/CD_Line_test/test.py -v --screenshot=only-on-failure --tracing=retain-on-failure --html=report.html --self-contained-html
 
     - name: Upload test results
       if: always()
       uses: actions/upload-artifact@v4
       with:
         name: playwright-test-results
-        path: test-results/
+        path: |
+          test-results/
+          report.html
         retention-days: 7
 
-      # 테스트가 성공했을 때만 작동하는 배포 연동 단계
     - name: Trigger Render Deployment
       if: success()
       run: |

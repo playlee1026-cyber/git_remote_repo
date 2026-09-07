@@ -1,0 +1,4 @@
+﻿Test_Case_ID,Description,Endpoint,Method,Request_Payload,Expected_Status_Code,Expected_Response_Data
+TC_PAY_001,정상 결제 처리,/api/v1/payments,POST,"{""user_id"": 101, ""amount"": 50000, ""currency"": ""KRW"", ""card_token"": ""tok_12345""}",200,"{""status"": ""SUCCESS"", ""transaction_id"": ""txn_8899""}"
+TC_PAY_002,결제 금액 0원 (하한 경계값),/api/v1/payments,POST,"{""user_id"": 101, ""amount"": 0, ""currency"": ""KRW"", ""card_token"": ""tok_12345""}",400,"{""error"": ""Amount must be greater than zero""}"
+TC_PAY_003,유효하지 않은 카드 토큰,/api/v1/payments,POST,"{""user_id"": 101, ""amount"": 50000, ""currency"": ""KRW"", ""card_token"": ""invalid_token""}",402,"{""error"": ""Payment Required - Invalid Card""}"

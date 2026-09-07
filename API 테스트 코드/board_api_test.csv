@@ -1,0 +1,4 @@
+﻿Test_Case_ID,Description,Endpoint,Method,Request_Payload,Expected_Status_Code,Expected_Response_Data
+TC_BOARD_001,정상 게시글 작성,/api/v1/posts,POST,"{""title"": ""QA Automation Guide"", ""content"": ""E2E and API testing strategy."", ""author_id"": 101}",201,"{""post_id"": 500, ""status"": ""published""}"
+TC_BOARD_002,필수 파라미터(제목) 누락,/api/v1/posts,POST,"{""content"": ""Missing title test"", ""author_id"": 101}",400,"{""error"": ""Title is required""}"
+TC_BOARD_003,권한 없는 사용자 삭제 시도 (401/403),/api/v1/posts/500,DELETE,{},403,"{""error"": ""Forbidden: You do not have permission to delete this post""}"

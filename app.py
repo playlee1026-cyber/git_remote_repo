@@ -5,7 +5,7 @@ app.secret_key = 'ahnlab_portfolio_secret_key' # 세션 암호화를 위한 키
 
 @app.route('/')
 def home():
-    return 'Hello, Render CI/CD Deployment Success! 🚀'
+    return '안녕Hello안녕, Render CI/CD Deployment Success! 🚀'
 
 # 1. 로그인 엔드포인트 (테스트를 위한 로직)
 @app.route('/login', methods=['GET', 'POST'])
@@ -50,4 +50,4 @@ def admin_settings():
     return '<h1>시스템 설정</h1><button>시스템 설정 저장</button>'
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5001)

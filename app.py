@@ -41,11 +41,10 @@ def dashboard():
 @app.route('/admin/settings')
 def admin_settings():
     if 'role' not in session:
-        
         return redirect(url_for('login'))     
     if session['role'] != 'admin':
-        # 403 반환 대신 대시보드로 리다이렉트 시키고 싶을 때
-        return redirect(url_for('dashboard'))
+        # 대시보드로 리다이렉트하는 대신 접근 거부 메시지 반환
+        return '관리자 권한이 없습니다.', 403
         
     return '<h1>시스템 설정</h1><button>시스템 설정 저장</button>'
 

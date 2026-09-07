@@ -64,6 +64,8 @@ def test_unauthorized_access_to_admin_page(page: Page):
     - 목적: 일반 권한의 세션으로 URL을 직접 조작하여 관리자 페이지 접근 시도시,
             프론트엔드 라우터가 이를 차단하고 적절한 예외 처리를 수행하는지 확인.
     """
+    # 1. 로그인 페이지로 이동 (누락되었던 코드 추가)
+    page.goto(f"{BASE_URL}/login")
     # 요소 탐색 대기 시간을 60초(60000ms)로 연장
     page.get_by_placeholder("아이디").fill("normal_user", timeout=60000)
 

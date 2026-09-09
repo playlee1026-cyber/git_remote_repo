@@ -2,10 +2,10 @@
 TC_PAY_001,정상 결제 처리,/api/v1/payments,POST,"{""user_id"": 101, ""amount"": 50000, ""currency"": ""KRW"", ""card_token"": ""tok_12345""}",200,"{""status"": ""SUCCESS"", ""transaction_id"": ""txn_8899""}"
 TC_PAY_002,결제 금액 0원 (하한 경계값),/api/v1/payments,POST,"{""user_id"": 101, ""amount"": 0, ""currency"": ""KRW"", ""card_token"": ""tok_12345""}",400,"{""error"": ""Amount must be greater than zero""}"
 TC_PAY_003,유효하지 않은 카드 토큰,/api/v1/payments,POST,"{""user_id"": 101, ""amount"": 50000, ""currency"": ""KRW"", ""card_token"": ""invalid_token""}",402,"{""error"": ""Payment Required - Invalid Card""}"
-TC_PAY_004,/api/payment,POST,마이너스(-) 금액 결제 시도,"{""tx_id"": ""TX9901"", ""user_id"": ""U1001"", ""amount"": -5000, ""auth_token"": ""valid_token""}",400
-TC_PAY_005,/api/payment,POST,0원 결제 시도,"{""tx_id"": ""TX9902"", ""user_id"": ""U1001"", ""amount"": 0, ""auth_token"": ""valid_token""}",400
-TC_PAY_006,/api/payment,POST,1회 결제 한도 초과 금액 시도,"{""tx_id"": ""TX9903"", ""user_id"": ""U1001"", ""amount"": 99999999999, ""auth_token"": ""valid_token""}",400
-TC_PAY_007,/api/payment,POST,기 처리된 Transaction ID 재요청,"{""tx_id"": ""TX_DUPLICATE_01"", ""user_id"": ""U1001"", ""amount"": 10000, ""auth_token"": ""valid_token""}",409
-TC_PAY_008,/api/payment,POST,인증 토큰이 누락된 결제 요청,"{""tx_id"": ""TX9905"", ""user_id"": ""U1001"", ""amount"": 10000, ""auth_token"": """"}",401
-TC_PAY_009,/api/payment,POST,만료되거나 변조된 토큰 사용,"{""tx_id"": ""TX9906"", ""user_id"": ""U1001"", ""amount"": 10000, ""auth_token"": ""expired_or_invalid_string""}",401
-TC_PAY_010,/api/payment,POST,타인의 user_id로 결제 시도 (권한 우회),"{""tx_id"": ""TX9907"", ""user_id"": ""U9999_OTHER"", ""amount"": 10000, ""auth_token"": ""valid_token_for_U1001""}",403
+TC_PAY_004,마이너스(-) 금액 결제 시도,/api/payment,POST,"{""tx_id"": ""TX9901"", ""user_id"": ""U1001"", ""amount"": -5000, ""auth_token"": ""valid_token""}",400
+TC_PAY_005,0원 결제 시도,/api/payment,POST,"{""tx_id"": ""TX9902"", ""user_id"": ""U1001"", ""amount"": 0, ""auth_token"": ""valid_token""}",400
+TC_PAY_006,1회 결제 한도 초과 금액 시도,/api/payment,POST,"{""tx_id"": ""TX9903"", ""user_id"": ""U1001"", ""amount"": 99999999999, ""auth_token"": ""valid_token""}",400
+TC_PAY_007,기 처리된 Transaction ID 재요청,/api/payment,POST,"{""tx_id"": ""TX_DUPLICATE_01"", ""user_id"": ""U1001"", ""amount"": 10000, ""auth_token"": ""valid_token""}",409
+TC_PAY_008,인증 토큰이 누락된 결제 요청,/api/payment,POST,"{""tx_id"": ""TX9905"", ""user_id"": ""U1001"", ""amount"": 10000, ""auth_token"": """"}",401
+TC_PAY_009,만료되거나 변조된 토큰 사용,/api/payment,POST,"{""tx_id"": ""TX9906"", ""user_id"": ""U1001"", ""amount"": 10000, ""auth_token"": ""expired_or_invalid_string""}",401
+TC_PAY_010,타인의 user_id로 결제 시도 (권한 우회),/api/payment,POST,"{""tx_id"": ""TX9907"", ""user_id"": ""U9999_OTHER"", ""amount"": 10000, ""auth_token"": ""valid_token_for_U1001""}",403

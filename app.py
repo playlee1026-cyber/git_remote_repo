@@ -66,7 +66,19 @@ def mock_signup():
         
     return jsonify({"message": "User created successfully"}), 201
 
-# 5. 결제 API (Payment)
+# 5. 기존 결제 API (TC_PAY_001 ~ 003 테스트용)
+@app.route('/api/v1/payments', methods=['POST'])
+def mock_payments():
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Invalid request"}), 400
+    if data.get('amount', 0) <= 0:
+        return jsonify({"error": "Amount must be greater than zero"}), 400
+    if data.get('card_token') == "invalid_token":
+        return jsonify({"error": "Payment Required - Invalid Card"}), 402
+    return jsonify({"status": "SUCCESS", "transaction_id": "txn_8899"}), 200
+
+# 5-1. 고도화된 보안/결제 API (TC_PAY_004 ~ 010 테스트용)
 # --- 신규 추가: 금융/보안 엣지 케이스 방어 로직이 적용된 결제 API ---
 @app.route('/api/payment', methods=['POST'])
 def secure_payment_mock():

@@ -67,18 +67,54 @@ def mock_signup():
     return jsonify({"message": "User created successfully"}), 201
 
 # 5. 결제 API (Payment)
-@app.route('/api/v1/payments', methods=['POST'])
-def mock_payments():
+# --- 신규 추가: 금융/보안 엣지 케이스 방어 로직이 적용된 결제 API ---
+@app.route('/api/payment', methods=['POST'])
+def secure_payment_mock():
     data = request.get_json()
+    
+    # JSON 바디가 없는 경우 방어
     if not data:
-        return jsonify({"error": "Invalid request"}), 400
+        return jsonify({"error": "Invalid request payload"}), 400
+
+    tx_id = data.get('tx_id')
+    user_id = data.get('user_id')
+    amount = data.get('amount')
+    auth_token = data.get('auth_token')
+
+    # 1. 인증/인가 검증 (보안 엣지 케이스 방어)
+    if not auth_token:
+        # TC_PAY_008: 토큰 누락
+        return jsonify({"error": "Unauthorized: Missing auth token"}), 401
         
-    if data.get('amount', 0) <= 0:
-        return jsonify({"error": "Amount must be greater than zero"}), 400
-    if data.get('card_token') == "invalid_token":
-        return jsonify({"error": "Payment Required - Invalid Card"}), 402
+    if auth_token == "expired_or_invalid_string":
+        # TC_PAY_009: 만료/변조된 토큰
+        return jsonify({"error": "Unauthorized: Invalid or expired token"}), 401
         
-    return jsonify({"status": "SUCCESS", "transaction_id": "txn_8899"}), 200
+    if user_id == "U9999_OTHER" and auth_token == "valid_token_for_U1001":
+        # TC_PAY_010: 타인의 계정으로 접근 시도 (권한 우회)
+        return jsonify({"error": "Forbidden: Permission denied for this user_id"}), 403
+
+    # 2. 결제 금액 검증 (비정상 금액 엣지 케이스 방어)
+    if amount is not None:
+        if amount <= 0:
+            # TC_PAY_004, TC_PAY_005: 마이너스(-) 및 0원 결제 시도
+            return jsonify({"error": "Bad Request: Amount must be greater than 0"}), 400
+        
+        if amount >= 99999999999:
+            # TC_PAY_006: 1회 결제 한도 초과 (비상식적 고액)
+            return jsonify({"error": "Bad Request: Amount exceeds maximum limit"}), 400
+
+    # 3. 트랜잭션 동시성 및 중복 제어 (중복 결제 방어)
+    if tx_id == "TX_DUPLICATE_01":
+        # TC_PAY_007: 이미 처리 완료된 트랜잭션 ID 재요청
+        return jsonify({"error": "Conflict: Transaction ID already processed"}), 409
+
+    # 4. 모든 보안/예외 검증을 통과한 정상 결제 처리
+    return jsonify({
+        "status": "SUCCESS", 
+        "transaction_id": tx_id,
+        "message": "Payment processed securely"
+    }), 200
 
 # 6. 게시판 API (Board)
 @app.route('/api/v1/posts', methods=['POST'])

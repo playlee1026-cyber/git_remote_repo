@@ -48,3 +48,15 @@ jobs:
       if: success()
       run: |
         curl -X POST "https://git-remote-repo.onrender.com"
+
+    - name: Send Slack Notification
+      if: always()
+      uses: rtCamp/action-slack-notify@v2
+      env:
+            # 깃허브에 숨겨둔 URL(Secret)을 안전하게 호출하여 사용합니다.
+            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+            SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
+            SLACK_TITLE: "QA 자동화 파이프라인 실행 결과: ${{ job.status }}"
+            SLACK_MESSAGE: "GitHub Actions Artifacts에서 report.html 리포트를 확인해주세요."
+            SLACK_USERNAME: "QA Automation Bot"
+            SLACK_FOOTER: "Git-Remote-Repo CI/CD"

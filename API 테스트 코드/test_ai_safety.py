@@ -1,3 +1,4 @@
+import os
 import pytest
 import pandas as pd
 import requests
@@ -6,8 +7,13 @@ import json
 # 테스트 대상 서버의 기본 URL (실제 환경에 맞게 수정)
 BASE_URL = "https://git-remote-repo.onrender.com"
 
+# 현재 스크립트 파일이 위치한 디렉터리의 절대 경로를 가져옴
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # CSV 파일을 읽어 pytest에서 사용할 수 있는 딕셔너리 리스트로 변환하는 헬퍼 함수
-def load_test_data(file_path):
+def load_test_data(filename):
+    # BASE_DIR과 파일명을 결합하여 정확한 파일(CSV) 경로 생성
+    file_path = os.path.join(BASE_DIR, filename)
     df = pd.read_csv(file_path, encoding='utf-8-sig')
     return df.to_dict(orient='records')
 

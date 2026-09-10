@@ -32,7 +32,7 @@ jobs:
 
     - name: Run Playwright tests
       # 시각적 리포트 생성(--html) 및 에러 발생 시 네트워크/DOM 트레이스 저장(--tracing) 옵션 추가
-      run: pytest CI/CD_Line_test/test.py "API 테스트 코드/" -v --screenshot=only-on-failure --tracing=retain-on-failure --html=report.html --self-contained-html
+      run: pytest CI/CD_Line_test/test.py API/ -v --screenshot=only-on-failure --tracing=retain-on-failure --html=report.html --self-contained-html
 
     - name: Upload test results
       if: always()

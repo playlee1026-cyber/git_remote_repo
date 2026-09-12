@@ -3,24 +3,6 @@ name: Playwright UI E2E Pipeline
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
-  schedule:
-    # 매일 한국 시간 자정(KST 00:00 -> UTC 15:00)에 회귀 테스트 자동 실행
-    - cron: '0 15 * * *'
-  # --- 추가된 부분: 수동 트리거 및 선택 옵션 ---
-  workflow_dispatch:
-    inputs:
-      test_target:
-        description: '실행할 테스트 모듈을 선택하세요 (전체, API, UI, 핵심기능)'
-        required: true
-        default: 'tests/'
-        type: choice
-        options:
-          - 'tests/'
-          - 'tests/api/'
-          - 'tests/ui/'
-          - '-m smoke'
 
 jobs:
   e2e-test:
@@ -44,20 +26,20 @@ jobs:
 
     - name: Install Playwright Browsers
       run: playwright install --with-deps
-      # run: playwright install --with-deps chromium  ##크로미움만 필요할 경우 변경하여 사용##
+      
 
     - name: Wake up Render server
       run: curl -s https://git-remote-repo.onrender.com/login > /dev/null
 
-    - name: Run API & UI Tests
-      # --- 선택된 타겟 변수(${{ github.event.inputs.test_target }}) 주입 ---
-      run: pytest ${{ github.event.inputs.test_target || 'tests/' }} -v --screenshot=only-on-failure --tracing=retain-on-failure --html=report.html --self-contained-html
+    - name: Run Playwright tests
+      # 시각적 리포트 생성(--html) 및 에러 발생 시 네트워크/DOM 트레이스 저장(--tracing) 옵션 추가
+      run: pytest CI/CD_Line_test/test.py API/ -v --screenshot=only-on-failure --tracing=retain-on-failure --html=report.html --self-contained-html
 
     - name: Upload test results
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: automation-test-report
+        name: playwright-test-results
         path: |
           test-results/
           report.html
@@ -72,10 +54,10 @@ jobs:
       if: always()
       uses: rtCamp/action-slack-notify@v2
       env:
+            # 깃허브에 숨겨둔 URL(Secret)을 안전하게 호출하여 사용합니다.
             SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
             SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
             SLACK_TITLE: "QA 자동화 파이프라인 실행 결과: ${{ job.status }}"
-            # --- 슬랙 메시지에도 어떤 타겟을 실행했는지 표시 ---
-            SLACK_MESSAGE: "GitHub Actions Artifacts에서 report.html 리포트를 확인해주세요. (Target: ${{ github.event.inputs.test_target || '전체' }})"
+            SLACK_MESSAGE: "GitHub Actions Artifacts에서 report.html 리포트를 확인해주세요."
             SLACK_USERNAME: "QA Automation Bot"
-            SLACK_FOOTER: "Playwright UI E2E Pipeline Framework CI/CD"
+            SLACK_FOOTER: "Git-Remote-Repo CI/CD"

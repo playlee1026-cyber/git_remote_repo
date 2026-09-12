@@ -1,0 +1,4 @@
+# Created by pytest automatically.
+# .gitignore
+__pycache__/
+*.py[cod]

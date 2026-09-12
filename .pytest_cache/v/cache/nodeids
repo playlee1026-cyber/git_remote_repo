@@ -1,0 +1,19 @@
+[
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_board_api[TC_BOARD_001]",
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_board_api[TC_BOARD_002]",
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_board_api[TC_BOARD_003]",
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_payment_api[TC_PAY_001]",
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_payment_api[TC_PAY_002]",
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_payment_api[TC_PAY_003]",
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_payment_api[TC_PAY_004]",
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_payment_api[TC_PAY_005]",
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_payment_api[TC_PAY_006]",
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_payment_api[TC_PAY_007]",
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_payment_api[TC_PAY_008]",
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_payment_api[TC_PAY_009]",
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_payment_api[TC_PAY_010]",
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_signup_api[TC_SIGNUP_001]",
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_signup_api[TC_SIGNUP_002]",
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_signup_api[TC_SIGNUP_003]",
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_signup_api[TC_SIGNUP_004]"
+]

@@ -1,0 +1,6 @@
+{
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_signup_api[TC_SIGNUP_001]": true,
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_signup_api[TC_SIGNUP_002]": true,
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_signup_api[TC_SIGNUP_003]": true,
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_signup_api[TC_SIGNUP_004]": true
+}

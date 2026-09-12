@@ -51,7 +51,7 @@ jobs:
 
     - name: Run API & UI Tests
       # --- 선택된 타겟 변수(${{ github.event.inputs.test_target }}) 주입 ---
-      run: pytest ${{ github.event.inputs.test_target || 'tests/' }} -v --screenshot=only-on-failure --tracing=retain-on-failure --html=report.html --self-contained-html
+      run: pytest tests/ -v --screenshot=only-on-failure --tracing=retain-on-failure --html=report.html --self-contained-html
 
     - name: Upload test results
       if: always()

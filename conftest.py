@@ -30,6 +30,5 @@ def pytest_runtest_makereport(item, call):
             screenshot_path=screenshot_path,  # API 테스트면 None이 전달됨
             bot_token=Config.SLACK_BOT_TOKEN,
             channel_id=Config.SLACK_CHANNEL_ID,
-            api_url=Config.SLACK_API_FILE_UPLOAD_URL,
             max_log_length=Config.SLACK_MAX_LOG_LENGTH
         )

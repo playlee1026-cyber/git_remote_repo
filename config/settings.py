@@ -43,3 +43,18 @@ class Config:
     SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")
     SLACK_CHANNEL_ID = os.getenv("SLACK_CHANNEL_ID")
     SLACK_MAX_LOG_LENGTH = int(os.getenv("SLACK_MAX_LOG_LENGTH", 500))
+    # [AML Network Mocking Settings] 가상자산/금융 규제 모킹용 데이터
+    MOCK_PAYMENT_API_PATTERN = "**/api/v1/payments"
+    MOCK_AML_ERROR_STATUS_CODE = 403
+    MOCK_AML_ERROR_RESPONSE_JSON = {
+        "error_code": "ERR_AML_LIMIT_EXCEEDED",
+        "message": "자금세탁방지(AML) 규제에 따라 1일 최대 이체 한도를 초과하였습니다."
+    }
+
+    # [UI Elements Settings] UI 상호작용을 위한 엘리먼트 셀렉터 (SauceDemo 등 타겟 사이트에 맞게 수정 가능)
+    PAGE_URL_CHECKOUT_STEP = os.getenv("TEST_CHECKOUT_URL", "https://www.saucedemo.com/checkout-step-two.html")
+    SELECTOR_BUTTON_SUBMIT_PAYMENT = "button[data-test='finish']"
+    SELECTOR_TEXT_ERROR_MESSAGE = "h3[data-test='error']"
+    
+    # [Expected Results] 프론트엔드에 노출되어야 할 기대 결과 텍스트
+    EXPECTED_UI_AML_ERROR_TEXT = "자금세탁방지(AML) 규제에 따라 1일 최대 이체 한도를 초과하였습니다."

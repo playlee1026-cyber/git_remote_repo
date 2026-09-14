@@ -4,7 +4,7 @@ from pages.login_page import LoginPage
 from pages.dashboard_page import DashboardPage
 from pages.admin_page import AdminPage
 # 중앙 설정에서 권한 계정 가져오기
-from config.settings import CREDENTIAL_NORMAL_USER_ID, CREDENTIAL_NORMAL_USER_PASSWORD
+from config.settings import CREDENTIAL_NORMAL_USER_ID, CREDENTIAL_NORMAL_USER_PASSWORD, Config
 
 @pytest.mark.ui
 @pytest.mark.security

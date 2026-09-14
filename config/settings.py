@@ -28,3 +28,18 @@ CREDENTIAL_NORMAL_USER_PASSWORD = "test_password123!"
 # 추후 관리자 테스트가 추가될 경우를 대비한 플레이스홀더
 # CREDENTIAL_ADMIN_USER_ID = "admin_user"
 # CREDENTIAL_ADMIN_USER_PASSWORD = "admin_password123!"
+
+class Config:
+    # [Test Environment]
+    BASE_URL = os.getenv("TEST_BASE_URL", "https://www.saucedemo.com/")
+    UI_TIMEOUT_MS = int(os.getenv("UI_TIMEOUT_MS", 3000))
+    
+    # [Screenshot Settings]
+    SCREENSHOT_DIR = os.path.join(os.getcwd(), "test-results", "screenshots")
+    SCREENSHOT_PREFIX = "FAIL_"
+
+    # [Slack Bot Settings]
+    SLACK_API_FILE_UPLOAD_URL = "https://slack.com/api/files.upload"
+    SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")
+    SLACK_CHANNEL_ID = os.getenv("SLACK_CHANNEL_ID")
+    SLACK_MAX_LOG_LENGTH = int(os.getenv("SLACK_MAX_LOG_LENGTH", 500))

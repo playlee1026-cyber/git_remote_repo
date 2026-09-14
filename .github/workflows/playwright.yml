@@ -55,7 +55,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
             # 하드코딩된 'tests/' 대신 선택된 타겟 변수가 작동하도록 수정
-      run: pytest ${{ github.event.inputs.test_target || 'tests/' }} -v --screenshot=only-on-failure --tracing=retain-on-failure --html=report.html --self-contained-html
+      run: pytest ${{ github.event.inputs.test_target || 'tests/' }} -s -v --screenshot=only-on-failure --tracing=retain-on-failure --html=report.html --self-contained-html
 
     - name: Upload test results
       if: always()

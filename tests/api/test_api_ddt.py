@@ -1,6 +1,6 @@
 import pytest
 import json
-from config.settings import URL_API_BASE, PATH_SIGNUP_CSV, PATH_PAYMENT_CSV, PATH_BOARD_CSV
+from config.settings import URL_API_BASE, PATH_SIGNUP_CSV, PATH_PAYMENT_CSV, PATH_BOARD_CSV, API_REQUEST_TIMEOUT_SECONDS
 from utils.api_client import BaseAPI
 from utils.data_reader import get_api_test_data
 
@@ -29,7 +29,7 @@ class TestBusinessAPI:
             method=method,
             endpoint=endpoint,
             json=payload,
-            timeout=5
+            timeout= API_REQUEST_TIMEOUT_SECONDS 
         )
 
         # 상태 코드 검증

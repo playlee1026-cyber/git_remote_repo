@@ -34,7 +34,34 @@ def login():
 def dashboard():
     if 'role' not in session:
         return redirect(url_for('login'))
-    return '<h1>보안 대시보드</h1><p>환영합니다.</p>'
+    
+    # [수정] 대시보드 화면에 상점(상품 목록)으로 이동할 수 있는 내비게이션 링크 추가
+    # 테스트 코드의 TEXT_NAVIGATE_TO_INVENTORY("상품 목록으로 이동")과 일치시킴
+    return '''
+        <h1>보안 대시보드</h1>
+        <p>환영합니다.</p>
+        <nav>
+            <a href="/inventory.html">상품 목록으로 이동</a>
+        </nav>
+    '''
+
+# [신규 추가] 상점 인벤토리 페이지 라우트 
+# UI E2E 테스트 흐름(대시보드 -> 인벤토리)이 정상 작동하도록 서버 측 모의(Mock) 페이지 제공
+@app.route('/inventory.html')
+def inventory():
+    if 'role' not in session:
+        return redirect(url_for('login'))
+        
+    # inventory_page.py에서 요구하는 셀렉터(.title, data-test^='add-to-cart', .shopping_cart_link) 반영
+    return '''
+        <h1 class="title">Products</h1>
+        <div class="inventory_container">
+            <div class="inventory_item">
+                <button data-test="add-to-cart-backpack">Add to cart</button>
+            </div>
+        </div>
+        <a href="/cart.html" class="shopping_cart_link">장바구니로 가기</a>
+    '''
 
 # 3. 관리자 전용 페이지 (RBAC 방어 로직 핵심)
 @app.route('/admin/settings')

@@ -50,14 +50,6 @@ jobs:
       run: curl -s https://git-remote-repo.onrender.com/login > /dev/null
 
     - name: Run API & UI Tests
-    # Python 코드(conftest.py)에서 Slack API를 호출할 수 있도록 환경변수 주입
-      env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
-            # 하드코딩된 'tests/' 대신 선택된 타겟 변수가 작동하도록 수정
-      run: pytest ${{ github.event.inputs.test_target || 'tests/' }} -s -v --screenshot=only-on-failure --tracing=retain-on-failure --html=report.html --self-contained-html
-
-    - name: Run API & UI Tests
           # Python 코드(settings.py, conftest.py 등)에서 사용할 수 있도록 환경변수 주입
       env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

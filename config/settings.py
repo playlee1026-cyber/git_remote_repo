@@ -50,7 +50,7 @@ class Config:
 class ApiTestConfiguration:
     """API 테스트를 위한 설정 및 상수를 관리하는 객체입니다."""
     
-    BASE_URL = "http://localhost:5001"
+    BASE_URL = "https://git-remote-repo.onrender.com"
     REQUEST_TIMEOUT_SECONDS = 5
     
     # 도메인별 테스트 데이터 CSV 파일 경로 상수

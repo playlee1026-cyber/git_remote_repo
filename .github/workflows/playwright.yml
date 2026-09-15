@@ -2,9 +2,9 @@ name: Playwright UI E2E Pipeline
 
 on:
   push:
-    branches: [ master ]
+    branches: [ fix-clean-architecture ]
   pull_request:
-    branches: [ master ]
+    branches: [ fix-clean-architecture ]
   schedule:
     # 매일 한국 시간 자정(KST 00:00 -> UTC 15:00)에 회귀 테스트 자동 실행
     - cron: '0 15 * * *'

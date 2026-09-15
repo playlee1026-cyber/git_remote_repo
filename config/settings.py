@@ -7,10 +7,10 @@ import os
 # (환경 변수가 없을 경우를 대비해 기존 URL을 기본값으로 설정하여 하위 호환성 유지)
 URL_API_BASE = os.getenv("API_BASE_URL", "https://git-remote-repo.onrender.com")
 
-# API 데이터 주도 테스트(DDT)용 CSV 경로
-PATH_SIGNUP_CSV = os.path.join("data", "signup_api_test.csv")
-PATH_PAYMENT_CSV = os.path.join("data", "payment_api_test.csv")
-PATH_BOARD_CSV = os.path.join("data", "board_api_test.csv")
+# # API 데이터 주도 테스트(DDT)용 CSV 경로
+# PATH_SIGNUP_CSV = os.path.join("data", "signup_api_test.csv")
+# PATH_PAYMENT_CSV = os.path.join("data", "payment_api_test.csv")
+# PATH_BOARD_CSV = os.path.join("data", "board_api_test.csv")
 
 # ---------------------------------------------------------
 # 2. Web UI 테스트 설정
@@ -48,16 +48,14 @@ class Config:
     SCREENSHOT_PREFIX = "FAIL_"
 
 class ApiTestConfiguration:
-    """API 테스트를 위한 전역 설정 및 상수를 관리하는 객체입니다."""
+    """API 테스트를 위한 설정 및 상수를 관리하는 객체입니다."""
     
-    # 서버 및 엔드포인트 설정
     BASE_URL = "http://localhost:5001"
-    PAYMENT_ENDPOINT_PATH = "/api/payment"
+    REQUEST_TIMEOUT_SECONDS = 5
     
-    # 데이터 기반 테스트(DDT) 파일 경로 설정
+    # 도메인별 테스트 데이터 CSV 파일 경로 상수
+    SIGNUP_TEST_DATA_CSV_PATH = "data/signup_api_test.csv"
     PAYMENT_TEST_DATA_CSV_PATH = "data/payment_api_test.csv"
-    FALLBACK_VALUE_FOR_MISSING_DATA = ""
+    BOARD_TEST_DATA_CSV_PATH = "data/board_api_test.csv"
     
-    # API 응답 검증용 키 상수
-    RESPONSE_KEY_ERROR = "error"
-    RESPONSE_KEY_MESSAGE = "message"
+    FALLBACK_VALUE_FOR_MISSING_DATA = ""

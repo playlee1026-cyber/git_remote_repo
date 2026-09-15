@@ -4,3 +4,4 @@ pandas
 requests
 pytest-html
 slack-sdk
+pytest-dotenv

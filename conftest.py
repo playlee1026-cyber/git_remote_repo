@@ -1,5 +1,16 @@
-import pytest
 import os
+import pytest
+from dotenv import load_dotenv
+
+# ---------------------------------------------------------
+# [로컬 환경 변수 초기화]
+# 프로젝트 루트에 위치한 .env 파일을 찾아 로컬 메모리에 주입합니다.
+# 클린 아키텍처 원칙에 따라, 환경 변수에 의존하는 내부 모듈(config.settings 등)을
+# 임포트하기 '전'에 반드시 먼저 실행되어야 합니다.
+# ---------------------------------------------------------
+load_dotenv()
+
+# 환경 변수가 안전하게 로드된 이후에 프로젝트 모듈을 임포트합니다.
 from config.settings import Config
 from utils.slack_bot import notify_slack_on_test_failure
 

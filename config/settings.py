@@ -64,3 +64,8 @@ class Config:
     SLACK_MAX_LOG_LENGTH = int(os.getenv("SLACK_MAX_LOG_LENGTH", 500))
     SCREENSHOT_DIR = os.path.join(os.getcwd(), "test-results", "screenshots")
     SCREENSHOT_PREFIX = "FAIL_"
+
+    # [Checkout Step One]
+    DUMMY_SHIPPING_FIRST_NAME = '홍'
+    DUMMY_SHIPPING_LAST_NAME = '길동'
+    DUMMY_SHIPPING_POSTAL_CODE = '1234'

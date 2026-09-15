@@ -34,24 +34,24 @@ CREDENTIAL_NORMAL_USER_PASSWORD = os.getenv("NORMAL_USER_PASSWORD")
 
 class Config:
     # [Test Environment & Credentials]
-    BASE_URL = os.getenv("TEST_BASE_URL", "https://www.saucedemo.com/")
-    TEST_USER_ID = os.getenv("TEST_USER_ID", "standard_user")
-    TEST_USER_PASSWORD = os.getenv("TEST_USER_PASSWORD", "secret_sauce")
-    UI_TIMEOUT_MS = int(os.getenv("UI_TIMEOUT_MS", 3000))
+    # BASE_URL = os.getenv("TEST_BASE_URL", "https://www.saucedemo.com/")
+    # TEST_USER_ID = os.getenv("TEST_USER_ID", "standard_user")
+    # TEST_USER_PASSWORD = os.getenv("TEST_USER_PASSWORD", "secret_sauce")
+    # UI_TIMEOUT_MS = int(os.getenv("UI_TIMEOUT_MS", 3000))
 
-    # [UI Selectors - Login]
-    SELECTOR_INPUT_USERNAME = "[data-test='username']"
-    SELECTOR_INPUT_PASSWORD = "[data-test='password']"
-    SELECTOR_BUTTON_LOGIN = "[data-test='login-button']"
+    # # [UI Selectors - Login]
+    # SELECTOR_INPUT_USERNAME = "[data-test='username']"
+    # SELECTOR_INPUT_PASSWORD = "[data-test='password']"
+    # SELECTOR_BUTTON_LOGIN = "[data-test='login-button']"
 
     # [UI Selectors - Checkout]
-    PAGE_URL_CHECKOUT_STEP = f"{BASE_URL}checkout-step-two.html"
-    SELECTOR_BUTTON_SUBMIT_PAYMENT = "button[data-test='finish']"
-    SELECTOR_TEXT_ERROR_MESSAGE = "h3[data-test='error']"
-    EXPECTED_UI_AML_ERROR_TEXT = "자금세탁방지(AML) 규제에 따라 1일 최대 이체 한도를 초과하였습니다."
+    # PAGE_URL_CHECKOUT_STEP = f"{BASE_URL}checkout-step-two.html"
+    # SELECTOR_BUTTON_SUBMIT_PAYMENT = "button[data-test='finish']"
+    # SELECTOR_TEXT_ERROR_MESSAGE = "h3[data-test='error']"
+    # EXPECTED_UI_AML_ERROR_TEXT = "자금세탁방지(AML) 규제에 따라 1일 최대 이체 한도를 초과하였습니다."
 
     # [AML Network Mocking Settings]
-    MOCK_PAYMENT_API_PATTERN = "**/api/v1/payments"
+    # MOCK_PAYMENT_API_PATTERN = "**/api/v1/payments"
     MOCK_AML_ERROR_STATUS_CODE = 403
     MOCK_AML_ERROR_RESPONSE_JSON = {
         "error_code": "ERR_AML_LIMIT_EXCEEDED",

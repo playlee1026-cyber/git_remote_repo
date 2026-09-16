@@ -12,6 +12,11 @@ URL_API_BASE = os.getenv("API_BASE_URL", "https://git-remote-repo.onrender.com")
 # ---------------------------------------------------------
 URL_WEB_BASE = os.getenv("WEB_BASE_URL", "https://git-remote-repo.onrender.com")
 
+# ---------------------------------------------------------
+# 3. E2E Web 테스트 설정
+# ---------------------------------------------------------
+AUTOMATION_EXERCISE_BASE_URL = "https://automationexercise.com"
+
 # 타임아웃(Timeout) 중앙 통제 (밀리초 단위)
 TIMEOUT_DEFAULT = 5000
 TIMEOUT_ELEMENT_WAIT = 10000  # 입력창, 에러 토스트 등 특정 DOM 요소 렌더링 대기용

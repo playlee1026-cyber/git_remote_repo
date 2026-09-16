@@ -45,3 +45,14 @@ def pytest_runtest_makereport(item, call):
         )
 
         #####
+
+from pages.automation_exercise.home_page import AutomationExerciseHomePage
+from pages.automation_exercise.login_signup_page import AutomationExerciseLoginSignupPage
+
+@pytest.fixture
+def ae_home_page(page: Page) -> AutomationExerciseHomePage:
+    return AutomationExerciseHomePage(page)
+
+@pytest.fixture
+def ae_login_signup_page(page: Page) -> AutomationExerciseLoginSignupPage:
+    return AutomationExerciseLoginSignupPage(page)

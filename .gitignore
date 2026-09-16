@@ -1,2 +1,7 @@
+# Created by pytest automatically.
+# .gitignore
 venv/
-venv/
+.env
+__pycache__/
+*.py[cod]
+test.html

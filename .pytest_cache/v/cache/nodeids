@@ -15,5 +15,7 @@
   "tests/api/test_api_ddt.py::TestBusinessAPI::test_signup_api[TC_SIGNUP_001]",
   "tests/api/test_api_ddt.py::TestBusinessAPI::test_signup_api[TC_SIGNUP_002]",
   "tests/api/test_api_ddt.py::TestBusinessAPI::test_signup_api[TC_SIGNUP_003]",
-  "tests/api/test_api_ddt.py::TestBusinessAPI::test_signup_api[TC_SIGNUP_004]"
+  "tests/api/test_api_ddt.py::TestBusinessAPI::test_signup_api[TC_SIGNUP_004]",
+  "tests/ui/test_automation_exercise_signup_flow.py::test_user_registration_and_deletion_lifecycle[chromium-registration_data0]",
+  "tests/ui/test_automation_exercise_signup_flow.py::test_user_registration_and_deletion_lifecycle[registration_data0]"
 ]

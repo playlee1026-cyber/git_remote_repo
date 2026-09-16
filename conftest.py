@@ -3,6 +3,7 @@ import pytest
 from dotenv import load_dotenv
 from playwright.sync_api import Page
 
+
 # ---------------------------------------------------------
 # [로컬 환경 변수 초기화]
 # 프로젝트 루트에 위치한 .env 파일을 찾아 로컬 메모리에 주입합니다.
@@ -49,11 +50,26 @@ def pytest_runtest_makereport(item, call):
 
 from pages.automation_exercise.home_page import AutomationExerciseHomePage
 from pages.automation_exercise.login_signup_page import AutomationExerciseLoginSignupPage
+from pages.automation_exercise.signup_details_page import AutomationExerciseSignupDetailsPage
+from pages.automation_exercise.system_message_page import AutomationExerciseSystemMessagePage
 
 @pytest.fixture
 def ae_home_page(page: Page) -> AutomationExerciseHomePage:
+    """Automation Exercise의 홈 페이지 객체를 제공하는 픽스처입니다."""
     return AutomationExerciseHomePage(page)
 
 @pytest.fixture
 def ae_login_signup_page(page: Page) -> AutomationExerciseLoginSignupPage:
+    """Automation Exercise의 초기 회원가입 및 로그인 폼 페이지 객체를 제공하는 픽스처입니다."""
     return AutomationExerciseLoginSignupPage(page)
+
+# 🌟 [추가된 코드] 누락되었던 의존성(Fixture) 팩토리 등록
+@pytest.fixture
+def ae_signup_details_page(page: Page) -> AutomationExerciseSignupDetailsPage:
+    """Automation Exercise의 상세 계정 정보 입력 페이지 객체를 제공하는 픽스처입니다."""
+    return AutomationExerciseSignupDetailsPage(page)
+
+@pytest.fixture
+def ae_system_message_page(page: Page) -> AutomationExerciseSystemMessagePage:
+    """Automation Exercise의 시스템 결과 메시지(계정 생성, 삭제 등) 확인 페이지 객체를 제공하는 픽스처입니다."""
+    return AutomationExerciseSystemMessagePage(page)

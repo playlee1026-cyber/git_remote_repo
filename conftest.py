@@ -1,6 +1,7 @@
 import os
 import pytest
 from dotenv import load_dotenv
+from playwright.sync_api import Page
 
 # ---------------------------------------------------------
 # [로컬 환경 변수 초기화]

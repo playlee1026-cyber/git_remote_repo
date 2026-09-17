@@ -3,6 +3,7 @@ from playwright.sync_api import Page, expect
 class AutomationExerciseHomePage:
     LOGOUT_MENU_BUTTON_LOCATOR = "a[href='/logout']"
     LOGGED_IN_STATUS_INDICATOR_LOCATOR = "text=Logged in as"
+    PRODUCTS_MENU_BUTTON_LOCATOR = "a[href='/products']"
     
     def __init__(self, page: Page):
         self.page = page
@@ -35,3 +36,6 @@ class AutomationExerciseHomePage:
 
     def verify_user_is_logged_in(self) -> None:
         expect(self.page.locator(self.LOGGED_IN_STATUS_INDICATOR_LOCATOR)).to_be_visible()
+
+    def click_products_menu_button(self) -> None:
+            self.page.click(self.PRODUCTS_MENU_BUTTON_LOCATOR)

@@ -73,3 +73,46 @@ def ae_signup_details_page(page: Page) -> AutomationExerciseSignupDetailsPage:
 def ae_system_message_page(page: Page) -> AutomationExerciseSystemMessagePage:
     """Automation Exercise의 시스템 결과 메시지(계정 생성, 삭제 등) 확인 페이지 객체를 제공하는 픽스처입니다."""
     return AutomationExerciseSystemMessagePage(page)
+
+#1. 새로 생성한 페이지 객체 클래스 임포트
+from pages.automation_exercise.products_page import AutomationExerciseProductsPage
+from pages.automation_exercise.cart_page import AutomationExerciseCartPage
+
+# 2. 의도가 드러나는 네이밍을 적용한 픽스처 등록
+@pytest.fixture
+def ae_products_page(page: Page) -> AutomationExerciseProductsPage:
+    """
+    [Intention] Playwright의 기본 page 객체를 주입받아 ProductsPage 객체를 인스턴스화하여 반환합니다.
+    테스트 모듈에서 ae_products_page 파라미터 호출 시 자동으로 주입됩니다.
+    """
+    return AutomationExerciseProductsPage(page=page)
+
+@pytest.fixture
+def ae_cart_page(page: Page) -> AutomationExerciseCartPage:
+    """
+    [Intention] Playwright의 기본 page 객체를 주입받아 CartPage 객체를 인스턴스화하여 반환합니다.
+    테스트 모듈에서 ae_cart_page 파라미터 호출 시 자동으로 주입됩니다.
+    """
+    return AutomationExerciseCartPage(page=page)
+
+import pytest
+from playwright.sync_api import BrowserContext
+
+# 매직 스트링 배제: 차단할 광고 서버 도메인 패턴 상수화
+ADVERTISEMENT_NETWORK_PATTERNS = [
+    "**/*googlesyndication.com**",
+    "**/*doubleclick.net**",
+    "**/*googleadservices.com**",
+    "**/*adservice.google.com**"
+]
+
+@pytest.fixture(autouse=True)
+def block_external_advertisement_networks(context: BrowserContext) -> None:
+    """
+    [Intention] 구글 비네트(Vignette) 등 E2E 테스트 흐름을 방해하는 
+    외부 광고 스크립트의 네트워크 요청을 컨텍스트 레벨에서 원천 차단(Abort)합니다.
+    """
+    for target_pattern in ADVERTISEMENT_NETWORK_PATTERNS:
+        context.route(target_pattern, lambda route: route.abort())
+    
+    yield

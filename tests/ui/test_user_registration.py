@@ -14,7 +14,7 @@ def test_user_registration_and_deletion_lifecycle(
 ):
     """
     Test Case 1: Register User
-    신규 사용자 가입부터 생성 확인, 로그인 상태 검증, 그리고 계정 삭제까지의 전체 라이프사이클을 검증합니다.
+    신규 사용자 가입부터 생성 확인, 로그인 상태 검증, 그리고 계정 삭제까지의 전체 라이프사이클을 검증
     """
     
     # Steps 1-3: 브라우저 실행 및 홈페이지 진입 검증

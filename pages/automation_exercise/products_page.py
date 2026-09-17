@@ -11,6 +11,8 @@ class AutomationExerciseProductsPage:
     VIEW_CART_MODAL_LINK_LOCATOR = "a[href='/view_cart'] > u"
     # 검색 결과 화면에 테스트 목적(장바구니 담기)에 부합 로케이터 
     SPECIFIC_PRODUCT_NAME_IN_SEARCH_RESULT_TEMPLATE = "div.productinfo p:text-is('{target_name}')"
+    # --- [신규 추가: 매직 스트링 배제용 상태 상수] ---
+    NETWORK_IDLE_STATE_INDICATOR = "networkidle"
     
     # 동적 로케이터 템플릿 (파라미터 주입용)
     SPECIFIC_PRODUCT_CARD_TEMPLATE = "div.product-image-wrapper:has(p:text-is('{target_name}'))"
@@ -24,8 +26,15 @@ class AutomationExerciseProductsPage:
         expect(self.page.locator(self.ALL_PRODUCTS_HEADER_LOCATOR)).to_be_visible()
 
     def execute_product_search(self, target_product_name: str) -> None:
+        """
+        검색창에 타겟 상품명을 입력하고 검색 버튼을 클릭한 뒤,
+        새로운 결과가 렌더링되도록 네트워크 통신이 완전히 종료(Idle)될 때까지 명시적으로 대기합니다.
+        """
         self.page.fill(self.SEARCH_PRODUCT_INPUT_LOCATOR, target_product_name)
         self.page.click(self.SEARCH_SUBMIT_BUTTON_LOCATOR)
+        
+        # 초고속 실행(PWDEBUG=0) 시 Race Condition 방지를 위한 상태 동기화
+        self.page.wait_for_load_state(self.NETWORK_IDLE_STATE_INDICATOR)
 
     def verify_searched_products_header_is_visible(self) -> None:
         expect(self.page.locator(self.SEARCHED_PRODUCTS_HEADER_LOCATOR)).to_be_visible()

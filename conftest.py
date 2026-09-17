@@ -116,3 +116,23 @@ def block_external_advertisement_networks(context: BrowserContext) -> None:
         context.route(target_pattern, lambda route: route.abort())
     
     yield
+
+from pages.automation_exercise.checkout_page import AutomationExerciseCheckoutPage
+from pages.automation_exercise.payment_page import AutomationExercisePaymentPage
+
+@pytest.fixture
+def ae_checkout_page(page: Page) -> AutomationExerciseCheckoutPage:
+    """
+    [Intention] Playwright의 기본 page 객체를 주입받아 CheckoutPage(주소 및 주문 내역 확인) 
+    객체를 인스턴스화하여 반환합니다.
+    """
+    return AutomationExerciseCheckoutPage(page=page)
+
+
+@pytest.fixture
+def ae_payment_page(page: Page) -> AutomationExercisePaymentPage:
+    """
+    [Intention] Playwright의 기본 page 객체를 주입받아 PaymentPage(카드 정보 입력 및 결제) 
+    객체를 인스턴스화하여 반환합니다.
+    """
+    return AutomationExercisePaymentPage(page=page)

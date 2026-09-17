@@ -7,6 +7,9 @@ class AutomationExerciseCartPage:
     CART_ITEM_PRICE_LOCATOR = "td.cart_price p"
     CART_ITEM_QUANTITY_LOCATOR = "td.cart_quantity button"
     CART_ITEM_TOTAL_PRICE_LOCATOR = "td.cart_total p"
+    # --- [매직 스트링 배제 로케이터 상수] ---
+    CART_PAGE_INDICATOR_LOCATOR = "li.active:has-text('Shopping Cart')"
+    PROCEED_TO_CHECKOUT_BUTTON_LOCATOR = "a.check_out:has-text('Proceed To Checkout')"
 
     def __init__(self, page: Page):
         self.page = page
@@ -25,3 +28,16 @@ class AutomationExerciseCartPage:
             expect(target_row.locator(self.CART_ITEM_PRICE_LOCATOR)).to_have_text(item_data["price"])
             expect(target_row.locator(self.CART_ITEM_QUANTITY_LOCATOR)).to_have_text(item_data["quantity"])
             expect(target_row.locator(self.CART_ITEM_TOTAL_PRICE_LOCATOR)).to_have_text(item_data["total_price"])
+
+    def verify_cart_page_is_visible(self) -> None:
+            """
+            장바구니 페이지에 정상적으로 진입했음을 알리는 고유 UI 요소(브레드크럼 등)가 
+            화면에 노출되었는지 검증합니다.
+            """
+            expect(self.page.locator(self.CART_PAGE_INDICATOR_LOCATOR)).to_be_visible()
+
+    def click_proceed_to_checkout_button(self) -> None:
+        """
+        장바구니 내역 확인 후 결제 단계로 넘어가는 'Proceed To Checkout' 버튼을 클릭합니다.
+        """
+        self.page.click(self.PROCEED_TO_CHECKOUT_BUTTON_LOCATOR)

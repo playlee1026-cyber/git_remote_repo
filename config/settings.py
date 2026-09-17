@@ -1,4 +1,5 @@
 import os
+##프로젝트 전체에서 공통으로 사용되는 글로벌 데이터와 환경 변수를 관리##
 
 # ---------------------------------------------------------
 # 1. API 테스트 설정
@@ -29,6 +30,9 @@ NAVIGATION_TIMEOUT = 15000  # URL 라우팅이 완료될 때까지 기다리는 
 # 평문 하드코딩을 제거하고 환경 변수에서 안전하게 호출하도록 100% 매개변수화 적용
 CREDENTIAL_NORMAL_USER_ID = os.getenv("NORMAL_USER_ID")
 CREDENTIAL_NORMAL_USER_PASSWORD = os.getenv("NORMAL_USER_PASSWORD")
+
+E2E_BASE_URL = "http://automationexercise.com"
+E2E_DEFAULT_TEST_PASSWORD = "Test@1234"
 
 # 추후 관리자 테스트가 추가될 경우를 대비한 플레이스홀더
 # CREDENTIAL_ADMIN_USER_ID = os.getenv("ADMIN_USER_ID")

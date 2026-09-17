@@ -1,6 +1,9 @@
 from playwright.sync_api import Page, expect
 
 class AutomationExerciseHomePage:
+    LOGOUT_MENU_BUTTON_LOCATOR = "a[href='/logout']"
+    LOGGED_IN_STATUS_INDICATOR_LOCATOR = "text=Logged in as"
+    
     def __init__(self, page: Page):
         self.page = page
         self.home_page_identifier = page.locator("a:has-text('Home')")
@@ -26,3 +29,9 @@ class AutomationExerciseHomePage:
     def click_delete_account_menu(self) -> None:
         """Step 17: 계정 삭제 메뉴를 클릭합니다."""
         self.delete_account_menu_button.click()
+
+    def click_logout_menu_button(self) -> None:
+        self.page.click(self.LOGOUT_MENU_BUTTON_LOCATOR)
+
+    def verify_user_is_logged_in(self) -> None:
+        expect(self.page.locator(self.LOGGED_IN_STATUS_INDICATOR_LOCATOR)).to_be_visible()

@@ -8,6 +8,7 @@ from config.settings import CREDENTIAL_NORMAL_USER_ID, CREDENTIAL_NORMAL_USER_PA
 
 @pytest.mark.ui
 @pytest.mark.security
+@pytest.mark.smoke
 def test_unauthorized_access_to_admin_page(page: Page):
     login_page = LoginPage(page)
     dashboard_page = DashboardPage(page)

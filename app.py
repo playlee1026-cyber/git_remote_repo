@@ -48,6 +48,29 @@ def admin_settings():
     return '<h1>시스템 설정</h1><button>시스템 설정 저장</button>'
 
 
+# 3-1. 결제 화면 (UI에서 /api/payment 호출 → 응답 메시지를 화면에 표시)
+# 네트워크 인터셉트(AML 한도 초과 등) 테스트의 대상이 되는 최소 화면
+@app.route('/checkout')
+def checkout():
+    return '''
+        <h1>결제</h1>
+        <button id="pay-button" type="button">결제하기</button>
+        <p id="payment-result" role="alert"></p>
+        <script>
+        document.getElementById('pay-button').addEventListener('click', async () => {
+            const res = await fetch('/api/payment', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({tx_id: 'TX_UI_001', user_id: 'U1001', amount: 10000, auth_token: 'valid_token'})
+            });
+            const data = await res.json();
+            document.getElementById('payment-result').textContent =
+                res.ok ? '결제가 완료되었습니다.' : (data.message || data.error);
+        });
+        </script>
+    '''
+
+
 # --- 추가된 데이터 주도 테스트용 Mock API 엔드포인트 ---
 
 # 4. 회원가입 API (Signup)

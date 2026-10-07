@@ -70,9 +70,12 @@ jobs:
         retention-days: 7
 
     - name: Trigger Render Deployment
-      if: success()
+      if: success() && github.event_name != 'pull_request'
+      env:
+        RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
       run: |
-        curl -X POST "https://git-remote-repo.onrender.com"
+        # Render 대시보드 > Settings > Deploy Hook 의 URL을 GitHub Secret으로 등록해 사용
+        curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL"
 
     - name: Send Slack Notification
       if: always()

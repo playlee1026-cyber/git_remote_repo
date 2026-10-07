@@ -74,7 +74,10 @@ jobs:
       env:
         RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
       run: |
-        # Render 대시보드 > Settings > Deploy Hook 의 URL을 GitHub Secret으로 등록해 사용
+        if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
+          echo "::error::RENDER_DEPLOY_HOOK_URL 시크릿이 설정되지 않았습니다."
+          exit 1
+        fi
         curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL"
 
     - name: Send Slack Notification

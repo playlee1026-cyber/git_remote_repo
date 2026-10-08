@@ -46,8 +46,20 @@ jobs:
       run: playwright install --with-deps
       # run: playwright install --with-deps chromium  ##크로미움만 필요할 경우 변경하여 사용##
 
-    - name: Wake up Render server
-      run: curl -s https://git-remote-repo.onrender.com/login > /dev/null
+    - name: Start local Flask server (mock backend)
+      # 배포 전의 "새 코드"를 검증하기 위해 CI 러너 안에서 app.py를 직접 실행합니다.
+      run: |
+        nohup python app.py > flask.log 2>&1 &
+        for i in $(seq 1 30); do
+          if curl -sf http://localhost:5001/login > /dev/null; then
+            echo "Flask 서버 준비 완료 (시도 ${i}회)"
+            exit 0
+          fi
+          sleep 1
+        done
+        echo "::error::Flask 서버가 30초 안에 시작되지 않았습니다."
+        cat flask.log
+        exit 1
 
     - name: Run API & UI Tests
           # Python 코드(settings.py, conftest.py 등)에서 사용할 수 있도록 환경변수 주입
@@ -57,6 +69,9 @@ jobs:
           # --- 추가된 부분: 평문 하드코딩을 대체할 인증 정보 주입 ---
           NORMAL_USER_ID: ${{ secrets.NORMAL_USER_ID }}
           NORMAL_USER_PASSWORD: ${{ secrets.NORMAL_USER_PASSWORD }}
+          # --- 추가된 부분: 러너에서 띄운 Flask 서버를 테스트 대상으로 지정 ---
+          WEB_BASE_URL: http://localhost:5001
+          API_BASE_URL: http://localhost:5001
       run: pytest ${{ github.event.inputs.test_target || 'tests/' }} -s -v --screenshot=only-on-failure --tracing=retain-on-failure --html=report.html --self-contained-html
 
     - name: Upload test results
@@ -67,6 +82,7 @@ jobs:
         path: |
           test-results/
           report.html
+          flask.log
         retention-days: 7
 
     - name: Trigger Render Deployment

@@ -16,7 +16,7 @@ CI/CD 파이프라인은 매일 자정(KST) 정기 회귀 테스트 외에도 **
 **Author:** 지원자 이진행
 
 ## 🏗️ System Architecture
-![Architecture](/System Architecture.png)
+![Architecture](./System Architecture.png)
 
 본 프레임워크는 독립적인 5개의 계층(Layer)으로 구성되어 동작합니다.
 

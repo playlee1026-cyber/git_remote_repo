@@ -56,8 +56,8 @@ class Config:
 class ApiTestConfiguration:
     """API 테스트를 위한 설정 및 상수를 관리하는 객체입니다."""
     
-    BASE_URL = "https://git-remote-repo.onrender.com"
-    # BASE_URL = "http://localhost:5001"
+    # 환경변수 API_BASE_URL로 대상 서버를 바꿀 수 있습니다. (CI: 러너에서 띄운 localhost, 기본값: Render)
+    BASE_URL = URL_API_BASE
     REQUEST_TIMEOUT_SECONDS = 5
     
     # 도메인별 테스트 데이터 CSV 파일 경로 상수
